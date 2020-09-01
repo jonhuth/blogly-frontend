@@ -6,6 +6,8 @@ import {
 
 import axios from 'axios';
 
+const apiUrlPrefix = 'https://blogly.herokuapp.com/api' || 'http://localhost:5000/api';
+
 //post will be obj with: title, description & body keys
 //we are expecting postId to be a generated uuid
 export function addPost(postData) {
@@ -39,7 +41,7 @@ export function voteOnPost(postId, newVotesCount) {
 }
 export function voteOnPostFromAPI(postId, vote) {
   return async function(dispatch) {
-    let response = await axios.post(`http://localhost:5000/api/posts/${postId}/vote/${vote}`);
+    let response = await axios.post(`${apiUrlPrefix}/posts/${postId}/vote/${vote}`);
     dispatch(voteOnPost(postId, response.data.votes));
   }
 }
@@ -65,7 +67,7 @@ export function deleteComment(postId, commentId) {
 
 export function getTitlesFromAPI() {
   return async function(dispatch) {
-    let response = await axios.get('http://localhost:5000/api/posts');
+    let response = await axios.get(`${apiUrlPrefix}/posts`);
     dispatch(getTitles(response.data));
   };
 }
@@ -76,7 +78,7 @@ function getTitles(titles) {
 
 export function getPostFromAPI(id){
   return async function(dispatch) {
-    let response = await axios.get(`http://localhost:5000/api/posts/${id}`);
+    let response = await axios.get(`${apiUrlPrefix}/posts/${id}`);
     dispatch(getPost(response.data));
   };
 }
@@ -87,35 +89,35 @@ function getPost(post) {
 
 export function addPostToAPI(data){
   return async function(dispatch) {
-    let response = await axios.post(`http://localhost:5000/api/posts`, data);
+    let response = await axios.post(`${apiUrlPrefix}/posts`, data);
     dispatch(addPost(response.data));
   }
 }
 
 export function editPostToAPI(id, data){
   return async function(dispatch) {
-    let response = await axios.put(`http://localhost:5000/api/posts/${id}`, data);
+    let response = await axios.put(`${apiUrlPrefix}/posts/${id}`, data);
     dispatch(updatePost(response.data));
   }
 }
 
 export function deletePostFromAPI(id){
   return async function(dispatch) {
-    await axios.delete(`http://localhost:5000/api/posts/${id}`);
+    await axios.delete(`${apiUrlPrefix}/posts/${id}`);
     dispatch(deletePost(id));
   }
 }
 
 export function addCommentToAPI(postId, data) {
   return async function(dispatch) {
-    let response = await axios.post(`http://localhost:5000/api/posts/${postId}/comments`, data);
+    let response = await axios.post(`${apiUrlPrefix}/posts/${postId}/comments`, data);
     dispatch(addComment(postId, response.data));
   }
 }
 
 export function deleteCommentFromAPI(postId, commentId) {
   return async function(dispatch) {
-    await axios.delete(`http://localhost:5000/api/posts/${postId}/comments/${commentId}`);
+    await axios.delete(`${apiUrlPrefix}/posts/${postId}/comments/${commentId}`);
     dispatch(deleteComment(postId, commentId));
   }
 }
