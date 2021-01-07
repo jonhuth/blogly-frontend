@@ -19,14 +19,14 @@ function Homepage() {
   const [postsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   
-  // useEffect(() => {
-  //   if(page){
-  //     history.push(`/page/${page}`)
-  //   } else {
-  //     dispatch(getTitlesFromAPI());
-  //   }
-  //   history.push('/');
-  // }, [dispatch, history, page]);
+  useEffect(() => {
+    if(page){
+      history.push(`/page/${page}`)
+    } else {
+      dispatch(getTitlesFromAPI());
+    }
+    history.push('/');
+  }, [dispatch, history, page]);
 
   useEffect(() => {
     dispatch(getTitlesFromAPI());
